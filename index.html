@@ -496,29 +496,29 @@
                     <h3>🕊️ Friedensversprechen</h3>
                     <p>Gib dein persönliches Versprechen für den Frieden ab:</p>
                     <textarea id="peaceMessage" placeholder="Ich verspreche für den Frieden zu..." rows="4"></textarea>
-                    <button onclick="submitPledge()" class="btn btn-primary">Versprechen abgeben</button>
+                    <button id="pledgeBtn" class="btn btn-primary">Versprechen abgeben</button>
                     <div class="pledge-count">Bereits <span id="pledgeCount">892</span> Versprechen abgegeben!</div>
                 </div>
 
                 <div class="vote-card">
                     <h3>🗳️ Was bewegt dich am meisten?</h3>
                     <div class="vote-options">
-                        <div class="vote-option" onclick="vote('justice')">
+                        <div class="vote-option" data-vote="justice">
                             <span class="vote-emoji">⚖️</span>
                             <span class="vote-text">Gerechtigkeit</span>
                             <span class="vote-percentage" id="justice-percent">34%</span>
                         </div>
-                        <div class="vote-option" onclick="vote('unity')">
+                        <div class="vote-option" data-vote="unity">
                             <span class="vote-emoji">🤝</span>
                             <span class="vote-text">Einheit</span>
                             <span class="vote-percentage" id="unity-percent">28%</span>
                         </div>
-                        <div class="vote-option" onclick="vote('compassion')">
+                        <div class="vote-option" data-vote="compassion">
                             <span class="vote-emoji">💖</span>
                             <span class="vote-text">Mitgefühl</span>
                             <span class="vote-percentage" id="compassion-percent">25%</span>
                         </div>
-                        <div class="vote-option" onclick="vote('voice')">
+                        <div class="vote-option" data-vote="voice">
                             <span class="vote-emoji">📢</span>
                             <span class="vote-text">Gehört werden</span>
                             <span class="vote-percentage" id="voice-percent">13%</span>
@@ -532,7 +532,7 @@
                     <p>Erzähle, warum Frieden für dich wichtig ist:</p>
                     <textarea id="storyText" placeholder="Meine Geschichte für den Frieden..." rows="4"></textarea>
                     <input type="text" id="storyName" placeholder="Dein Name (optional)" style="margin: 10px 0;">
-                    <button onclick="submitStory()" class="btn btn-primary">Geschichte teilen</button>
+                    <button id="storyBtn" class="btn btn-primary">Geschichte teilen</button>
                 </div>
             </div>
         </div>
@@ -653,25 +653,10 @@
         let hasVoted = false;
 
         function updateCounters() {
-            // Animate counter numbers
-            const counters = document.querySelectorAll('.counter-number');
-            counters.forEach(counter => {
-                const target = parseInt(counter.textContent.replace(/,/g, ''));
-                animateCounter(counter, target);
-            });
-        }
-
-        function animateCounter(element, target) {
-            let current = 0;
-            const increment = target / 100;
-            const timer = setInterval(() => {
-                current += increment;
-                if (current >= target) {
-                    current = target;
-                    clearInterval(timer);
-                }
-                element.textContent = Math.floor(current).toLocaleString();
-            }, 20);
+            // Simple counter update without animation for better compatibility
+            document.getElementById('listeners').textContent = '1,247';
+            document.getElementById('pledges').textContent = pledgeCount.toLocaleString();
+            document.getElementById('shares').textContent = document.getElementById('shares').textContent;
         }
 
         function updateVotePercentages() {
@@ -679,13 +664,21 @@
             
             Object.keys(votes).forEach(key => {
                 const percentage = Math.round((votes[key] / totalVotes) * 100);
-                document.getElementById(key + '-percent').textContent = percentage + '%';
+                const element = document.getElementById(key + '-percent');
+                if (element) {
+                    element.textContent = percentage + '%';
+                }
             });
             
-            document.getElementById('totalVotes').textContent = totalVotes.toLocaleString();
+            const totalElement = document.getElementById('totalVotes');
+            if (totalElement) {
+                totalElement.textContent = totalVotes.toLocaleString();
+            }
         }
 
         function vote(option) {
+            console.log('Vote function called with:', option);
+            
             if (hasVoted) {
                 alert('Du hast bereits abgestimmt! Danke für deine Teilnahme. 🙏');
                 return;
@@ -696,17 +689,19 @@
             
             // Mark as voted
             document.querySelectorAll('.vote-option').forEach(opt => opt.classList.remove('voted'));
-            event.target.closest('.vote-option').classList.add('voted');
+            document.querySelector(`[data-vote="${option}"]`).classList.add('voted');
             
             updateVotePercentages();
             
             // Show thank you message
             setTimeout(() => {
                 alert('Danke für deine Stimme! Gemeinsam machen wir den Unterschied. ✊');
-            }, 500);
+            }, 300);
         }
 
         function submitPledge() {
+            console.log('Pledge function called');
+            
             const message = document.getElementById('peaceMessage').value.trim();
             if (!message) {
                 alert('Bitte gib dein Friedensversprechen ein. 🕊️');
@@ -722,6 +717,8 @@
         }
 
         function submitStory() {
+            console.log('Story function called');
+            
             const story = document.getElementById('storyText').value.trim();
             const name = document.getElementById('storyName').value.trim();
             
@@ -731,8 +728,9 @@
             }
             
             // Increment shares counter
-            const currentShares = parseInt(document.getElementById('shares').textContent.replace(/,/g, ''));
-            document.getElementById('shares').textContent = (currentShares + 1).toLocaleString();
+            const sharesElement = document.getElementById('shares');
+            const currentShares = parseInt(sharesElement.textContent.replace(/,/g, ''));
+            sharesElement.textContent = (currentShares + 1).toLocaleString();
             
             document.getElementById('storyText').value = '';
             document.getElementById('storyName').value = '';
@@ -741,8 +739,155 @@
             alert(`${thankYou} für das Teilen deiner Geschichte! Sie inspiriert andere. ✨`);
         }
 
-        // Add click handlers for action buttons
-        document.querySelectorAll('.btn').forEach(btn => {
+        // Document ready function - WORKING VERSION
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Friedensbewegung: DOM loaded, setting up event listeners');
+
+            // Vote data
+            let votes = {
+                justice: 627,
+                unity: 516,
+                compassion: 462,
+                voice: 240
+            };
+            
+            let pledgeCount = 892;
+            let hasVoted = false;
+
+            function updateVotePercentages() {
+                const total = Object.values(votes).reduce((a, b) => a + b, 0);
+                
+                Object.keys(votes).forEach(key => {
+                    const percentage = Math.round((votes[key] / total) * 100);
+                    const element = document.getElementById(key + '-percent');
+                    if (element) {
+                        element.textContent = percentage + '%';
+                    }
+                });
+                
+                const totalElement = document.getElementById('totalVotes');
+                if (totalElement) {
+                    totalElement.textContent = total.toLocaleString();
+                }
+            }
+
+            function vote(option) {
+                console.log('Voting for:', option);
+                
+                if (hasVoted) {
+                    alert('Du hast bereits abgestimmt! Danke für deine Teilnahme. 🙏');
+                    return;
+                }
+                
+                votes[option]++;
+                hasVoted = true;
+                
+                // Visual feedback
+                document.querySelectorAll('.vote-option').forEach(opt => opt.classList.remove('voted'));
+                document.querySelector(`[data-vote="${option}"]`).classList.add('voted');
+                
+                updateVotePercentages();
+                
+                alert('Danke für deine Stimme! Gemeinsam machen wir den Unterschied. ✊');
+            }
+
+            function submitPledge() {
+                console.log('Submitting pledge...');
+                
+                const message = document.getElementById('peaceMessage').value.trim();
+                if (!message) {
+                    alert('Bitte gib dein Friedensversprechen ein. 🕊️');
+                    return;
+                }
+                
+                pledgeCount++;
+                document.getElementById('pledgeCount').textContent = pledgeCount;
+                document.getElementById('pledges').textContent = pledgeCount;
+                document.getElementById('peaceMessage').value = '';
+                
+                alert('Danke für dein Friedensversprechen! Es wird Teil unserer Bewegung. 💙');
+            }
+
+            function submitStory() {
+                console.log('Submitting story...');
+                
+                const story = document.getElementById('storyText').value.trim();
+                const name = document.getElementById('storyName').value.trim();
+                
+                if (!story) {
+                    alert('Bitte teile deine Geschichte mit uns. 📝');
+                    return;
+                }
+                
+                // Increment shares counter
+                const sharesElement = document.getElementById('shares');
+                const currentShares = parseInt(sharesElement.textContent.replace(/,/g, ''));
+                sharesElement.textContent = (currentShares + 1).toLocaleString();
+                
+                document.getElementById('storyText').value = '';
+                document.getElementById('storyName').value = '';
+                
+                const thankYou = name ? `Danke ${name}` : 'Danke';
+                alert(`${thankYou} für das Teilen deiner Geschichte! Sie inspiriert andere. ✨`);
+            }
+
+            // Add vote event listeners
+            document.querySelectorAll('.vote-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    const voteType = this.getAttribute('data-vote');
+                    vote(voteType);
+                });
+            });
+
+            // Add pledge button listener
+            const pledgeBtn = document.getElementById('pledgeBtn');
+            if (pledgeBtn) {
+                pledgeBtn.addEventListener('click', submitPledge);
+            }
+
+            // Add story button listener  
+            const storyBtn = document.getElementById('storyBtn');
+            if (storyBtn) {
+                storyBtn.addEventListener('click', submitStory);
+            }
+
+            // Initialize vote percentages
+            updateVotePercentages();
+
+            // Add Enter key support for textareas
+            const peaceMessage = document.getElementById('peaceMessage');
+            if (peaceMessage) {
+                peaceMessage.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        submitPledge();
+                    }
+                });
+            }
+
+            const storyText = document.getElementById('storyText');
+            if (storyText) {
+                storyText.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' && e.ctrlKey) {
+                        submitStory();
+                    }
+                });
+            }
+
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Add click handlers for action buttons
                 btn.addEventListener('click', function(e) {
                     if (this.getAttribute('href') === '#') {
                         e.preventDefault();
