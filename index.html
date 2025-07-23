@@ -443,14 +443,28 @@
             </p>
             
             <div style="text-align: center; margin: 40px 0;">
-                <iframe width="560" height="315" 
-                        src="https://www.youtube.com/embed/QNJL6nfu__Q" 
-                        title="They Don't Really Care About Us - Michael Jackson" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen
-                        style="max-width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                </iframe>
+                <div class="video-container">
+                    <iframe width="560" height="315" 
+                            src="https://www.youtube-nocookie.com/embed/QNJL6nfu__Q?rel=0&modestbranding=1" 
+                            title="They Don't Really Care About Us - Michael Jackson" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                            allowfullscreen
+                            style="max-width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                    </iframe>
+                    <div class="video-fallback" style="display: none;">
+                        <div style="background: #333; color: white; padding: 40px; border-radius: 15px; text-align: center;">
+                            <h3>🎵 "They Don't Really Care About Us"</h3>
+                            <p>Michael Jackson</p>
+                            <a href="https://www.youtube.com/watch?v=QNJL6nfu__Q" 
+                               target="_blank" 
+                               class="btn btn-primary" 
+                               style="margin-top: 20px; display: inline-block;">
+                                🎬 Video auf YouTube ansehen
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="song-impact">
@@ -586,6 +600,42 @@
                             behavior: 'smooth',
                             block: 'start'
                         });
+
+            // Check if iframe is blocked and show fallback
+            setTimeout(() => {
+                const iframe = document.querySelector('iframe');
+                const fallback = document.querySelector('.video-fallback');
+                
+                if (iframe && fallback) {
+                    // Try to detect if iframe is blocked
+                    iframe.onload = function() {
+                        // iframe loaded successfully
+                    };
+                    
+                    iframe.onerror = function() {
+                        // iframe failed to load, show fallback
+                        iframe.style.display = 'none';
+                        fallback.style.display = 'block';
+                    };
+                    
+                    // Also check if iframe content is accessible after a delay
+                    setTimeout(() => {
+                        try {
+                            if (iframe.offsetHeight === 0 || iframe.offsetWidth === 0) {
+                                iframe.style.display = 'none';
+                                fallback.style.display = 'block';
+                            }
+                        } catch (e) {
+                            iframe.style.display = 'none';
+                            fallback.style.display = 'block';
+                        }
+                    }, 3000);
+                }
+            }, 1000);
+
+            // Initialize counters and vote percentages
+            updateCounters();
+            updateVotePercentages();
                     }
                 });
             });
