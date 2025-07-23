@@ -146,90 +146,6 @@
             color: #333;
         }
 
-        .inspiration-section {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .inspiration-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 50px auto;
-            max-width: 800px;
-        }
-
-        .inspiration-figure {
-            background: rgba(255,255,255,0.9);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .inspiration-figure .name {
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-            color: #444;
-        }
-
-        .inspiration-figure .quote {
-            font-style: italic;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .action-section {
-            background: #2c3e50;
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-        }
-
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin: 40px 0;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 15px 30px;
-            border: none;
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: white;
-            border: 2px solid white;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        .hashtag {
-            font-size: 2rem;
-            color: #3498db;
-            margin: 30px 0;
-            font-weight: bold;
-        }
-
         .music-section {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
@@ -266,6 +182,18 @@
         .counter-label {
             font-size: 1rem;
             opacity: 0.8;
+        }
+
+        .video-container {
+            position: relative;
+        }
+
+        .video-fallback {
+            background: #2c3e50;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 560px;
         }
 
         .interactive-section {
@@ -363,6 +291,92 @@
         .song-impact {
             margin: 50px 0;
         }
+
+        .inspiration-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .inspiration-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 50px auto;
+            max-width: 800px;
+        }
+
+        .inspiration-figure {
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .inspiration-figure .name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #444;
+        }
+
+        .inspiration-figure .quote {
+            font-style: italic;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .action-section {
+            background: #2c3e50;
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .hashtag {
+            font-size: 2rem;
+            color: #3498db;
+            margin: 30px 0;
+            font-weight: bold;
+        }
+
+        .footer {
             background: #34495e;
             color: white;
             padding: 40px 20px;
@@ -588,59 +602,9 @@
     </footer>
 
     <script>
-        // Add some interactive elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Smooth scrolling for internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+        console.log('Friedensbewegung script loading...');
 
-            // Check if iframe is blocked and show fallback
-            setTimeout(() => {
-                const iframe = document.querySelector('iframe');
-                const fallback = document.querySelector('.video-fallback');
-                
-                if (iframe && fallback) {
-                    // Try to detect if iframe is blocked
-                    iframe.onload = function() {
-                        // iframe loaded successfully
-                    };
-                    
-                    iframe.onerror = function() {
-                        // iframe failed to load, show fallback
-                        iframe.style.display = 'none';
-                        fallback.style.display = 'block';
-                    };
-                    
-                    // Also check if iframe content is accessible after a delay
-                    setTimeout(() => {
-                        try {
-                            if (iframe.offsetHeight === 0 || iframe.offsetWidth === 0) {
-                                iframe.style.display = 'none';
-                                fallback.style.display = 'block';
-                            }
-                        } catch (e) {
-                            iframe.style.display = 'none';
-                            fallback.style.display = 'block';
-                        }
-                    }, 3000);
-                }
-            }, 1000);
-
-            // Initialize counters and vote percentages
-            updateCounters();
-            updateVotePercentages();
-                    }
-                });
-            });
-
-        // Interactive features
+        // Global variables
         let votes = {
             justice: 627,
             unity: 516,
@@ -649,21 +613,14 @@
         };
         
         let pledgeCount = 892;
-        let totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
         let hasVoted = false;
 
-        function updateCounters() {
-            // Simple counter update without animation for better compatibility
-            document.getElementById('listeners').textContent = '1,247';
-            document.getElementById('pledges').textContent = pledgeCount.toLocaleString();
-            document.getElementById('shares').textContent = document.getElementById('shares').textContent;
-        }
-
+        // Functions
         function updateVotePercentages() {
-            totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
+            const total = Object.values(votes).reduce((a, b) => a + b, 0);
             
             Object.keys(votes).forEach(key => {
-                const percentage = Math.round((votes[key] / totalVotes) * 100);
+                const percentage = Math.round((votes[key] / total) * 100);
                 const element = document.getElementById(key + '-percent');
                 if (element) {
                     element.textContent = percentage + '%';
@@ -672,12 +629,12 @@
             
             const totalElement = document.getElementById('totalVotes');
             if (totalElement) {
-                totalElement.textContent = totalVotes.toLocaleString();
+                totalElement.textContent = total.toLocaleString();
             }
         }
 
         function vote(option) {
-            console.log('Vote function called with:', option);
+            console.log('Voting for:', option);
             
             if (hasVoted) {
                 alert('Du hast bereits abgestimmt! Danke für deine Teilnahme. 🙏');
@@ -687,20 +644,17 @@
             votes[option]++;
             hasVoted = true;
             
-            // Mark as voted
+            // Visual feedback
             document.querySelectorAll('.vote-option').forEach(opt => opt.classList.remove('voted'));
             document.querySelector(`[data-vote="${option}"]`).classList.add('voted');
             
             updateVotePercentages();
             
-            // Show thank you message
-            setTimeout(() => {
-                alert('Danke für deine Stimme! Gemeinsam machen wir den Unterschied. ✊');
-            }, 300);
+            alert('Danke für deine Stimme! Gemeinsam machen wir den Unterschied. ✊');
         }
 
         function submitPledge() {
-            console.log('Pledge function called');
+            console.log('Submitting pledge...');
             
             const message = document.getElementById('peaceMessage').value.trim();
             if (!message) {
@@ -717,7 +671,7 @@
         }
 
         function submitStory() {
-            console.log('Story function called');
+            console.log('Submitting story...');
             
             const story = document.getElementById('storyText').value.trim();
             const name = document.getElementById('storyName').value.trim();
@@ -739,97 +693,9 @@
             alert(`${thankYou} für das Teilen deiner Geschichte! Sie inspiriert andere. ✨`);
         }
 
-        // Document ready function - WORKING VERSION
+        // Document ready
         document.addEventListener('DOMContentLoaded', function() {
             console.log('Friedensbewegung: DOM loaded, setting up event listeners');
-
-            // Vote data
-            let votes = {
-                justice: 627,
-                unity: 516,
-                compassion: 462,
-                voice: 240
-            };
-            
-            let pledgeCount = 892;
-            let hasVoted = false;
-
-            function updateVotePercentages() {
-                const total = Object.values(votes).reduce((a, b) => a + b, 0);
-                
-                Object.keys(votes).forEach(key => {
-                    const percentage = Math.round((votes[key] / total) * 100);
-                    const element = document.getElementById(key + '-percent');
-                    if (element) {
-                        element.textContent = percentage + '%';
-                    }
-                });
-                
-                const totalElement = document.getElementById('totalVotes');
-                if (totalElement) {
-                    totalElement.textContent = total.toLocaleString();
-                }
-            }
-
-            function vote(option) {
-                console.log('Voting for:', option);
-                
-                if (hasVoted) {
-                    alert('Du hast bereits abgestimmt! Danke für deine Teilnahme. 🙏');
-                    return;
-                }
-                
-                votes[option]++;
-                hasVoted = true;
-                
-                // Visual feedback
-                document.querySelectorAll('.vote-option').forEach(opt => opt.classList.remove('voted'));
-                document.querySelector(`[data-vote="${option}"]`).classList.add('voted');
-                
-                updateVotePercentages();
-                
-                alert('Danke für deine Stimme! Gemeinsam machen wir den Unterschied. ✊');
-            }
-
-            function submitPledge() {
-                console.log('Submitting pledge...');
-                
-                const message = document.getElementById('peaceMessage').value.trim();
-                if (!message) {
-                    alert('Bitte gib dein Friedensversprechen ein. 🕊️');
-                    return;
-                }
-                
-                pledgeCount++;
-                document.getElementById('pledgeCount').textContent = pledgeCount;
-                document.getElementById('pledges').textContent = pledgeCount;
-                document.getElementById('peaceMessage').value = '';
-                
-                alert('Danke für dein Friedensversprechen! Es wird Teil unserer Bewegung. 💙');
-            }
-
-            function submitStory() {
-                console.log('Submitting story...');
-                
-                const story = document.getElementById('storyText').value.trim();
-                const name = document.getElementById('storyName').value.trim();
-                
-                if (!story) {
-                    alert('Bitte teile deine Geschichte mit uns. 📝');
-                    return;
-                }
-                
-                // Increment shares counter
-                const sharesElement = document.getElementById('shares');
-                const currentShares = parseInt(sharesElement.textContent.replace(/,/g, ''));
-                sharesElement.textContent = (currentShares + 1).toLocaleString();
-                
-                document.getElementById('storyText').value = '';
-                document.getElementById('storyName').value = '';
-                
-                const thankYou = name ? `Danke ${name}` : 'Danke';
-                alert(`${thankYou} für das Teilen deiner Geschichte! Sie inspiriert andere. ✨`);
-            }
 
             // Add vote event listeners
             document.querySelectorAll('.vote-option').forEach(option => {
@@ -873,48 +739,39 @@
                 });
             }
 
-            // Smooth scrolling for internal links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
-                    }
-                });
-            });
-
-            // Add click handlers for action buttons
-                btn.addEventListener('click', function(e) {
-                    if (this.getAttribute('href') === '#') {
-                        e.preventDefault();
-                        
-                        if (this.textContent.includes('QR-Code')) {
-                            alert('QR-Code Generator wird geöffnet...');
-                            // Here you could integrate with your QR code generator
-                        } else if (this.textContent.includes('Story')) {
-                            alert('Teile deine Friedensbotschaft! Nutze #Friedensbewegung');
-                        } else if (this.textContent.includes('Community')) {
-                            alert('Community-Features kommen bald!');
+            // Check if iframe is blocked and show fallback
+            setTimeout(() => {
+                const iframe = document.querySelector('iframe');
+                const fallback = document.querySelector('.video-fallback');
+                
+                if (iframe && fallback) {
+                    iframe.onload = function() {
+                        console.log('YouTube iframe loaded successfully');
+                    };
+                    
+                    iframe.onerror = function() {
+                        console.log('YouTube iframe failed to load, showing fallback');
+                        iframe.style.display = 'none';
+                        fallback.style.display = 'block';
+                    };
+                    
+                    setTimeout(() => {
+                        try {
+                            if (iframe.offsetHeight === 0 || iframe.offsetWidth === 0) {
+                                console.log('YouTube iframe has no dimensions, showing fallback');
+                                iframe.style.display = 'none';
+                                fallback.style.display = 'block';
+                            }
+                        } catch (e) {
+                            console.log('YouTube iframe access error, showing fallback');
+                            iframe.style.display = 'none';
+                            fallback.style.display = 'block';
                         }
-                    }
-                });
-            });
+                    }, 3000);
+                }
+            }, 1000);
 
-            // Add scroll effects
-            window.addEventListener('scroll', function() {
-                const cards = document.querySelectorAll('.vision-card, .inspiration-figure');
-                cards.forEach(card => {
-                    const rect = card.getBoundingClientRect();
-                    if (rect.top < window.innerHeight && rect.bottom > 0) {
-                        card.style.opacity = '1';
-                        card.style.transform = 'translateY(0)';
-                    }
-                });
-            });
+            console.log('Friedensbewegung: All events set up successfully!');
         });
     </script>
 </body>
