@@ -230,7 +230,139 @@
             font-weight: bold;
         }
 
-        .footer {
+        .music-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 80px 20px;
+        }
+
+        .music-section h2 {
+            color: white;
+        }
+
+        .impact-counter {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        .counter-item {
+            background: rgba(255,255,255,0.1);
+            padding: 30px;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .counter-number {
+            display: block;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .counter-label {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        .interactive-section {
+            background: #ecf0f1;
+            padding: 80px 20px;
+        }
+
+        .interactive-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .pledge-card, .vote-card, .story-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .pledge-card h3, .vote-card h3, .story-card h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            margin: 15px 0;
+            font-family: inherit;
+        }
+
+        textarea:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .pledge-count, .total-votes {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .vote-options {
+            margin: 30px 0;
+        }
+
+        .vote-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            background: #f8f9fa;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vote-option:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .vote-option.voted {
+            background: #3498db;
+            color: white;
+        }
+
+        .vote-emoji {
+            font-size: 1.5rem;
+            margin-right: 15px;
+        }
+
+        .vote-text {
+            flex: 1;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        .vote-percentage {
+            font-weight: bold;
+            color: #3498db;
+        }
+
+        .vote-option.voted .vote-percentage {
+            color: white;
+        }
+
+        .song-impact {
+            margin: 50px 0;
+        }
             background: #34495e;
             color: white;
             padding: 40px 20px;
@@ -302,6 +434,96 @@
         </div>
     </section>
 
+    <section class="music-section">
+        <div class="section">
+            <h2>🎵 Die Stimme des Widerstands</h2>
+            <p style="text-align: center; font-size: 1.2rem; margin-bottom: 30px;">
+                "They Don't Really Care About Us" - Michael Jackson<br>
+                <em>Ein Schrei nach Gerechtigkeit, der heute noch hallte</em>
+            </p>
+            
+            <div style="text-align: center; margin: 40px 0;">
+                <iframe width="560" height="315" 
+                        src="https://www.youtube.com/embed/QNJL6nfu__Q" 
+                        title="They Don't Really Care About Us - Michael Jackson" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen
+                        style="max-width: 100%; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                </iframe>
+            </div>
+
+            <div class="song-impact">
+                <h3 style="text-align: center; margin: 40px 0 20px;">📊 Bewegung in Zahlen</h3>
+                <div class="impact-counter">
+                    <div class="counter-item">
+                        <span class="counter-number" id="listeners">1,247</span>
+                        <span class="counter-label">Menschen haben zugehört</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" id="pledges">892</span>
+                        <span class="counter-label">Friedensversprechen</span>
+                    </div>
+                    <div class="counter-item">
+                        <span class="counter-number" id="shares">456</span>
+                        <span class="counter-label">Geteilte Botschaften</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="interactive-section">
+        <div class="section">
+            <h2>✊ Deine Stimme zählt</h2>
+            
+            <div class="interactive-grid">
+                <div class="pledge-card">
+                    <h3>🕊️ Friedensversprechen</h3>
+                    <p>Gib dein persönliches Versprechen für den Frieden ab:</p>
+                    <textarea id="peaceMessage" placeholder="Ich verspreche für den Frieden zu..." rows="4"></textarea>
+                    <button onclick="submitPledge()" class="btn btn-primary">Versprechen abgeben</button>
+                    <div class="pledge-count">Bereits <span id="pledgeCount">892</span> Versprechen abgegeben!</div>
+                </div>
+
+                <div class="vote-card">
+                    <h3>🗳️ Was bewegt dich am meisten?</h3>
+                    <div class="vote-options">
+                        <div class="vote-option" onclick="vote('justice')">
+                            <span class="vote-emoji">⚖️</span>
+                            <span class="vote-text">Gerechtigkeit</span>
+                            <span class="vote-percentage" id="justice-percent">34%</span>
+                        </div>
+                        <div class="vote-option" onclick="vote('unity')">
+                            <span class="vote-emoji">🤝</span>
+                            <span class="vote-text">Einheit</span>
+                            <span class="vote-percentage" id="unity-percent">28%</span>
+                        </div>
+                        <div class="vote-option" onclick="vote('compassion')">
+                            <span class="vote-emoji">💖</span>
+                            <span class="vote-text">Mitgefühl</span>
+                            <span class="vote-percentage" id="compassion-percent">25%</span>
+                        </div>
+                        <div class="vote-option" onclick="vote('voice')">
+                            <span class="vote-emoji">📢</span>
+                            <span class="vote-text">Gehört werden</span>
+                            <span class="vote-percentage" id="voice-percent">13%</span>
+                        </div>
+                    </div>
+                    <div class="total-votes">Insgesamt <span id="totalVotes">1,847</span> Stimmen</div>
+                </div>
+
+                <div class="story-card">
+                    <h3>📝 Teile deine Geschichte</h3>
+                    <p>Erzähle, warum Frieden für dich wichtig ist:</p>
+                    <textarea id="storyText" placeholder="Meine Geschichte für den Frieden..." rows="4"></textarea>
+                    <input type="text" id="storyName" placeholder="Dein Name (optional)" style="margin: 10px 0;">
+                    <button onclick="submitStory()" class="btn btn-primary">Geschichte teilen</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section class="inspiration-section">
         <h2>Stimmen des Friedens</h2>
         <p>Große Geister der Geschichte haben den Weg gewiesen:</p>
@@ -368,8 +590,109 @@
                 });
             });
 
-            // Add click handlers for action buttons
-            document.querySelectorAll('.btn').forEach(btn => {
+        // Interactive features
+        let votes = {
+            justice: 627,
+            unity: 516,
+            compassion: 462,
+            voice: 240
+        };
+        
+        let pledgeCount = 892;
+        let totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
+        let hasVoted = false;
+
+        function updateCounters() {
+            // Animate counter numbers
+            const counters = document.querySelectorAll('.counter-number');
+            counters.forEach(counter => {
+                const target = parseInt(counter.textContent.replace(/,/g, ''));
+                animateCounter(counter, target);
+            });
+        }
+
+        function animateCounter(element, target) {
+            let current = 0;
+            const increment = target / 100;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 20);
+        }
+
+        function updateVotePercentages() {
+            totalVotes = Object.values(votes).reduce((a, b) => a + b, 0);
+            
+            Object.keys(votes).forEach(key => {
+                const percentage = Math.round((votes[key] / totalVotes) * 100);
+                document.getElementById(key + '-percent').textContent = percentage + '%';
+            });
+            
+            document.getElementById('totalVotes').textContent = totalVotes.toLocaleString();
+        }
+
+        function vote(option) {
+            if (hasVoted) {
+                alert('Du hast bereits abgestimmt! Danke für deine Teilnahme. 🙏');
+                return;
+            }
+            
+            votes[option]++;
+            hasVoted = true;
+            
+            // Mark as voted
+            document.querySelectorAll('.vote-option').forEach(opt => opt.classList.remove('voted'));
+            event.target.closest('.vote-option').classList.add('voted');
+            
+            updateVotePercentages();
+            
+            // Show thank you message
+            setTimeout(() => {
+                alert('Danke für deine Stimme! Gemeinsam machen wir den Unterschied. ✊');
+            }, 500);
+        }
+
+        function submitPledge() {
+            const message = document.getElementById('peaceMessage').value.trim();
+            if (!message) {
+                alert('Bitte gib dein Friedensversprechen ein. 🕊️');
+                return;
+            }
+            
+            pledgeCount++;
+            document.getElementById('pledgeCount').textContent = pledgeCount;
+            document.getElementById('pledges').textContent = pledgeCount;
+            document.getElementById('peaceMessage').value = '';
+            
+            alert('Danke für dein Friedensversprechen! Es wird Teil unserer Bewegung. 💙');
+        }
+
+        function submitStory() {
+            const story = document.getElementById('storyText').value.trim();
+            const name = document.getElementById('storyName').value.trim();
+            
+            if (!story) {
+                alert('Bitte teile deine Geschichte mit uns. 📝');
+                return;
+            }
+            
+            // Increment shares counter
+            const currentShares = parseInt(document.getElementById('shares').textContent.replace(/,/g, ''));
+            document.getElementById('shares').textContent = (currentShares + 1).toLocaleString();
+            
+            document.getElementById('storyText').value = '';
+            document.getElementById('storyName').value = '';
+            
+            const thankYou = name ? `Danke ${name}` : 'Danke';
+            alert(`${thankYou} für das Teilen deiner Geschichte! Sie inspiriert andere. ✨`);
+        }
+
+        // Add click handlers for action buttons
+        document.querySelectorAll('.btn').forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     if (this.getAttribute('href') === '#') {
                         e.preventDefault();
